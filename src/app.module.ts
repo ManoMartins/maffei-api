@@ -9,6 +9,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { AddressModule } from './address/address.module';
 import { CityModule } from './city/city.module';
 import { StateModule } from './state/state.module';
+import { StoreProductModule } from './store-product/store-product.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { StateModule } from './state/state.module';
     AddressModule,
     CityModule,
     StateModule,
+    StoreProductModule,
   ],
   controllers: [AppController],
   providers: [
