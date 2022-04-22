@@ -63,3 +63,86 @@ model City {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now())
 }
+
+model StoreProduct {
+  id          String                @id @default(uuid())
+  name        String
+  status      String
+  releaseDate DateTime
+  summary     String
+  storyline   String
+  slug        String
+  stock       Int
+  price       Float
+  genres      ProductsOnGenres[]
+  platforms   ProductsOnPlatforms[]
+  companies   InvolvedCompanies[]
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @default(now())
+}
+
+model Companies {
+  id          String              @id @default(uuid())
+  name        String
+  slug        String
+  description String
+  products    InvolvedCompanies[]
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @default(now())
+}
+
+model InvolvedCompanies {
+  company     Companies    @relation(fields: [companyId], references: [id])
+  companyId   String
+  product     StoreProduct @relation(fields: [productId], references: [id])
+  productId   String
+  isDeveloper Boolean
+  isPublisher Boolean
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
+
+  @@id([companyId, productId])
+}
+
+model Platform {
+  id           String                @id @default(uuid())
+  name         String
+  slug         String
+  generation   String
+  abbreviation String
+  summary      String
+  products     ProductsOnPlatforms[]
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @default(now())
+}
+
+model ProductsOnPlatforms {
+  platform   Platform     @relation(fields: [platformId], references: [id])
+  platformId String
+  product    StoreProduct @relation(fields: [productId], references: [id])
+  productId  String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @default(now())
+
+  @@id([platformId, productId])
+}
+
+model Genre {
+  id        String             @id @default(uuid())
+  name      String
+  slug      String
+  products  ProductsOnGenres[]
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @default(now())
+}
+
+model ProductsOnGenres {
+  product   StoreProduct @relation(fields: [productId], references: [id])
+  productId String
+  genre     Genre        @relation(fields: [genreId], references: [id])
+  genreId   String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @default(now())
+
+  @@id([genreId, productId])
+}
