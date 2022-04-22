@@ -1,0 +1,120 @@
+Project maffei_project {
+  database_type: 'PostgreSQL'
+  Note: 'e-commerce selling games'
+} 
+
+Enum gender_enum {
+  male
+  female
+  not_informed
+}
+
+Table users as U {
+  id uuid [pk]
+  gender gender_enum
+  name varchar
+  birth_date timestamp
+  document_number varchar
+  phone_number varchar
+  phone_number_type varchar
+  email varchar
+  password varchar
+  ranking varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table addresses {
+  id uuid [pk]
+  complement varchar
+  street varchar
+  street_type varchar
+  number varchar
+  neighborhood varchar
+  zip_code varchar
+  city_id uuid [ref: - cities.id]
+  state_id uuid [ref: - states.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table states {
+  id uuid [pk]
+  full_name varchar
+  initials varchar
+  country_id uuid [ref: - country.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table cities {
+  id uuid [pk]
+  name varchar
+  state_initials varchar [ref: - states.initials]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table country {
+  id uuid [pk]
+  name varchar
+}
+
+Table store_products {
+  id uuid [pk]
+  name varchar 
+  status varchar
+  release_date timestamp
+  summary varchar
+  storyline varchar
+  slug varchar
+  stock int
+  price float
+  genres_id uuid [ref: < genres.id]
+  platforms_id uuid [ref: < platforms.id]
+  involved_companies_id uuid [ref: < involved_companies.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table platforms {
+  id uuid [pk]
+  name varchar
+  slug varchar
+  generation varchar
+  abbreviation varchar
+  summary varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table genres {
+  id uuid [pk]
+  name varchar
+  slug varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table involved_companies {
+  id uuid [pk]
+  company_id uuid [ref: - companies.id]
+  store_product_id uuid [ref: - store_products.id]
+  developer bool
+  porting bool
+  publisher bool
+  supporting bool
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table companies {
+  id uuid [pk]
+  name varchar
+  slug varchar
+  description varchar
+  developed_games_id uuid [ref: < store_products.id]
+  published_games_id uuid [ref: < store_products.id]
+  created_at timestamp
+  updated_at timestamp
+}
