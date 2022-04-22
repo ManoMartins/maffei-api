@@ -20,7 +20,7 @@ model User {
   ranking         Int?      @default(0)
   phoneNumber     String
   phoneNumberType String
-  birth_date      DateTime
+  birthDate       DateTime
   addresses       Address[]
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @default(now())
