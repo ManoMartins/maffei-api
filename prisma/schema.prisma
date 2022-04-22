@@ -81,7 +81,7 @@ model StoreProduct {
   updatedAt   DateTime              @default(now())
 }
 
-model Companies {
+model Company {
   id          String              @id @default(uuid())
   name        String
   slug        String
@@ -92,7 +92,7 @@ model Companies {
 }
 
 model InvolvedCompanies {
-  company     Companies    @relation(fields: [companyId], references: [id])
+  company     Company    @relation(fields: [companyId], references: [id])
   companyId   String
   product     StoreProduct @relation(fields: [productId], references: [id])
   productId   String
@@ -108,7 +108,7 @@ model Platform {
   id           String                @id @default(uuid())
   name         String
   slug         String
-  generation   String
+  generation   String?
   abbreviation String
   summary      String
   products     ProductsOnPlatforms[]
