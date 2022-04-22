@@ -11,50 +11,63 @@ datasource db {
 }
 
 model User {
-  id                  String @id @default(uuid())
-  name                String
-  email               String @unique
-  password            String
-  documentNumber      String
-  gender              String
-  ranking             Int
-  phoneNumber         String
-  phoneNumberType     String
-  birth_date          DateTime
-  addresses           Address[]
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @default(now())
+  id              String    @id @default(uuid())
+  name            String
+  email           String    @unique
+  password        String
+  documentNumber  String
+  gender          String
+  ranking         Int?      @default(0)
+  phoneNumber     String
+  phoneNumberType String
+  birth_date      DateTime
+  addresses       Address[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now())
 }
 
 model Address {
-  id                  String @id @default(uuid())
-  street              String
-  streetType          String
-  number              Int
-  complement          String
-  neighborhood        String
-  city                String
-  state               String
-  country             String
-  zipCode             String
-  user                User @relation(fields: [userId], references: [id])
-  userId              String
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @default(now())
+  id           String   @id @default(uuid())
+  street       String
+  streetType   String
+  number       Int
+  complement   String?
+  neighborhood String?
+  city         String
+  state        String
+  country      String
+  zipCode      String
+  user         User?    @relation(fields: [userId], references: [id])
+  userId       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
 }
 
-model States {
-  id                  String @id @default(uuid())
-  fullName            String
-  initials            String
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @default(now())
+model State {
+  id        String   @id @default(uuid())
+  fullName  String
+  initials  String
+  cities    City[]
+  country   Country  @relation(fields: [countryId], references: [id])
+  countryId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
 
-model Cities {
-  id                  String @id @default(uuid())
-  name                String
-  stateId             String
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @default(now())
+model City {
+  id        String   @id @default(uuid())
+  name      String
+  state     State    @relation(fields: [stateId], references: [id])
+  stateId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Country {
+  id        String   @id @default(uuid())
+  name      String
+  initials  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  State     State[]
 }
