@@ -11,6 +11,7 @@ import { CityModule } from './city/city.module';
 import { StateModule } from './state/state.module';
 import { StoreProductModule } from './store-product/store-product.module';
 import { GenreModule } from './genre/genre.module';
+import { PlatformModule } from './platform/platform.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { GenreModule } from './genre/genre.module';
     StateModule,
     StoreProductModule,
     GenreModule,
+    PlatformModule,
   ],
   controllers: [AppController],
   providers: [
