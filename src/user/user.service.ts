@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { NotFoundException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -13,7 +13,7 @@ export class UserService {
     const emailAlreadyExists = await this.findByEmail(createUserDto.email);
 
     if (emailAlreadyExists) {
-      throw new BadRequestException('Email already exists');
+      throw new NotFoundException('Email already exists');
     }
 
     const passwordHash = await bcrypt.hash(createUserDto.password, 10);
@@ -44,7 +44,7 @@ export class UserService {
     const user = await this.prisma.user.findUnique({ where: { id } });
 
     if (!user) {
-      throw new BadRequestException('User not found');
+      throw new NotFoundException('User not found');
     }
 
     return { ...user, password: undefined };

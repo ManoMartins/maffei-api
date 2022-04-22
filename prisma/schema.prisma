@@ -30,44 +30,36 @@ model Address {
   id           String   @id @default(uuid())
   street       String
   streetType   String
-  number       Int
+  number       String
   complement   String?
-  neighborhood String?
-  city         String
-  state        String
-  country      String
+  neighborhood String
   zipCode      String
-  user         User?    @relation(fields: [userId], references: [id])
-  userId       String?
+  city         City     @relation(fields: [cityId], references: [id])
+  cityId       String
+  state        State    @relation(fields: [stateId], references: [id])
+  stateId      String
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @default(now())
 }
 
 model State {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   fullName  String
-  initials  String
+  initials  String    @unique()
   cities    City[]
-  country   Country  @relation(fields: [countryId], references: [id])
-  countryId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  addresses Address[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
 }
 
 model City {
-  id        String   @id @default(uuid())
-  name      String
-  state     State    @relation(fields: [stateId], references: [id])
-  stateId   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-}
-
-model Country {
-  id        String   @id @default(uuid())
-  name      String
-  initials  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  State     State[]
+  id            String    @id @default(uuid())
+  name          String
+  state         State     @relation(fields: [stateInitials], references: [initials])
+  stateInitials String
+  addresses     Address[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now())
 }
