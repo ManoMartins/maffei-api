@@ -1,15 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePlatformDto } from './dto/create-platform.dto';
 import { UpdatePlatformDto } from './dto/update-platform.dto';
 
 @Injectable()
 export class PlatformService {
+  constructor(private readonly prisma: PrismaService) {}
+
   create(createPlatformDto: CreatePlatformDto) {
     return 'This action adds a new platform';
   }
 
-  findAll() {
-    return `This action returns all platform`;
+  async findAll() {
+    return await this.prisma.platform.findMany();
   }
 
   findOne(id: number) {

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { GenreService } from './genre.service';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
@@ -13,8 +21,8 @@ export class GenreController {
   }
 
   @Get()
-  findAll() {
-    return this.genreService.findAll();
+  async findAll() {
+    return await this.genreService.findAll();
   }
 
   @Get(':id')
