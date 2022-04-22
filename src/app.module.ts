@@ -12,6 +12,7 @@ import { StateModule } from './state/state.module';
 import { StoreProductModule } from './store-product/store-product.module';
 import { GenreModule } from './genre/genre.module';
 import { PlatformModule } from './platform/platform.module';
+import { CompanyModule } from './company/company.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { PlatformModule } from './platform/platform.module';
     StoreProductModule,
     GenreModule,
     PlatformModule,
+    CompanyModule,
   ],
   controllers: [AppController],
   providers: [
