@@ -5,6 +5,7 @@ import {
   IsBoolean,
   IsEnum,
   IsNumber,
+  IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
@@ -36,6 +37,7 @@ export class CreateStoreProductDto {
   name: string;
 
   @IsEnum(ProductStatus)
+  @IsOptional()
   status: ProductStatus;
 
   @IsString()

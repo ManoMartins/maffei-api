@@ -3,14 +3,13 @@ import { Genre } from 'src/genre/entities/genre.entity';
 import { Platform } from 'src/platform/entities/platform.entity';
 
 export enum ProductStatus {
-  AVAILABLE = 'AVAILABLE',
-  OUT_OF_STOCK = 'OUT_OF_STOCK',
-  DISCONTINUED = 'DISCONTINUED',
+  ENABLED = 'ENABLED',
+  DISABLED = 'DISABLED',
 }
 
 export class StoreProduct {
   name: string;
-  status: ProductStatus;
+  status?: ProductStatus;
   releaseDate: Date;
   summary: string;
   storyline: string;
