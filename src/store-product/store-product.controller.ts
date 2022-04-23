@@ -12,12 +12,15 @@ import {
 import { StoreProductService } from './store-product.service';
 import { CreateStoreProductDto } from './dto/create-store-product.dto';
 import { UpdateStoreProductDto } from './dto/update-store-product.dto';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
 
 @Controller('store-product')
 export class StoreProductController {
   constructor(private readonly storeProductService: StoreProductService) {}
 
   @Post()
+  @Roles(Role.ADMIN)
   async create(@Body() createStoreProductDto: CreateStoreProductDto) {
     return await this.storeProductService.create(createStoreProductDto);
   }

@@ -13,6 +13,7 @@ import { StoreProductModule } from './store-product/store-product.module';
 import { GenreModule } from './genre/genre.module';
 import { PlatformModule } from './platform/platform.module';
 import { CompanyModule } from './company/company.module';
+import { RolesGuard } from './auth/guards/roles.guard';
 
 @Module({
   imports: [
@@ -33,6 +34,10 @@ import { CompanyModule } from './company/company.module';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })
