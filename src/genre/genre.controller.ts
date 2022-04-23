@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
 } from '@nestjs/common';
@@ -16,8 +16,8 @@ export class GenreController {
   constructor(private readonly genreService: GenreService) {}
 
   @Post()
-  create(@Body() createGenreDto: CreateGenreDto) {
-    return this.genreService.create(createGenreDto);
+  async create(@Body() createGenreDto: CreateGenreDto) {
+    return await this.genreService.create(createGenreDto);
   }
 
   @Get()
@@ -26,17 +26,20 @@ export class GenreController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.genreService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.genreService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGenreDto: UpdateGenreDto) {
-    return this.genreService.update(+id, updateGenreDto);
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateGenreDto: UpdateGenreDto,
+  ) {
+    return await this.genreService.update(id, updateGenreDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.genreService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.genreService.remove(id);
   }
 }
