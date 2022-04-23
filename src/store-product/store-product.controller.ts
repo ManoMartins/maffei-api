@@ -3,9 +3,11 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { StoreProductService } from './store-product.service';
 import { CreateStoreProductDto } from './dto/create-store-product.dto';
@@ -16,30 +18,31 @@ export class StoreProductController {
   constructor(private readonly storeProductService: StoreProductService) {}
 
   @Post()
-  create(@Body() createStoreProductDto: CreateStoreProductDto) {
-    return this.storeProductService.create(createStoreProductDto);
+  async create(@Body() createStoreProductDto: CreateStoreProductDto) {
+    return await this.storeProductService.create(createStoreProductDto);
   }
 
   @Get()
-  findAll() {
-    return this.storeProductService.findAll();
+  async findAll() {
+    return await this.storeProductService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.storeProductService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.storeProductService.findOne(id);
   }
 
-  @Patch(':id')
-  update(
+  @Put(':id')
+  async update(
     @Param('id') id: string,
     @Body() updateStoreProductDto: UpdateStoreProductDto,
   ) {
-    return this.storeProductService.update(+id, updateStoreProductDto);
+    return await this.storeProductService.update(id, updateStoreProductDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.storeProductService.remove(+id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id') id: string) {
+    return await this.storeProductService.remove(id);
   }
 }
