@@ -3,6 +3,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateStoreProductDto } from './dto/create-store-product.dto';
 import { UpdateStoreProductDto } from './dto/update-store-product.dto';
+import { ProductStatus } from './entities/store-product.entity';
+import { UpdateStatusStoreProductDto } from './dto/update-status-store-product-dto';
 
 @Injectable()
 export class StoreProductService {
@@ -103,6 +105,22 @@ export class StoreProductService {
         platforms: { create: platforms },
         releaseDate: new Date(updateStoreProductDto.releaseDate),
         slug: kebabCase(updateStoreProductDto.name),
+      },
+    });
+
+    return storeProduct;
+  }
+
+  async updateStatus(
+    id: string,
+    updateStatusStoreProductDto: UpdateStatusStoreProductDto,
+  ) {
+    const storeProduct = await this.prisma.storeProduct.update({
+      where: {
+        id,
+      },
+      data: {
+        status: updateStatusStoreProductDto.status,
       },
     });
 

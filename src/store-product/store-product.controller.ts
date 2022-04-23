@@ -8,12 +8,15 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Patch,
 } from '@nestjs/common';
 import { StoreProductService } from './store-product.service';
 import { CreateStoreProductDto } from './dto/create-store-product.dto';
 import { UpdateStoreProductDto } from './dto/update-store-product.dto';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
+import { ProductStatus } from './entities/store-product.entity';
+import { UpdateStatusStoreProductDto } from './dto/update-status-store-product-dto';
 
 @Controller('store-product')
 export class StoreProductController {
@@ -41,6 +44,17 @@ export class StoreProductController {
     @Body() updateStoreProductDto: UpdateStoreProductDto,
   ) {
     return await this.storeProductService.update(id, updateStoreProductDto);
+  }
+
+  @Patch(':id/status')
+  async updateStatus(
+    @Param('id') id: string,
+    @Body() updateStatusStoreProductDto: UpdateStatusStoreProductDto,
+  ) {
+    return await this.storeProductService.updateStatus(
+      id,
+      updateStatusStoreProductDto,
+    );
   }
 
   @Delete(':id')
