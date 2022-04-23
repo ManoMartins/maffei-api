@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PlatformService } from './platform.service';
 import { CreatePlatformDto } from './dto/create-platform.dto';
 import { UpdatePlatformDto } from './dto/update-platform.dto';
@@ -8,27 +16,30 @@ export class PlatformController {
   constructor(private readonly platformService: PlatformService) {}
 
   @Post()
-  create(@Body() createPlatformDto: CreatePlatformDto) {
-    return this.platformService.create(createPlatformDto);
+  async create(@Body() createPlatformDto: CreatePlatformDto) {
+    return await this.platformService.create(createPlatformDto);
   }
 
   @Get()
-  findAll() {
-    return this.platformService.findAll();
+  async findAll() {
+    return await this.platformService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.platformService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.platformService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePlatformDto: UpdatePlatformDto) {
-    return this.platformService.update(+id, updatePlatformDto);
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updatePlatformDto: UpdatePlatformDto,
+  ) {
+    return await this.platformService.update(id, updatePlatformDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.platformService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.platformService.remove(id);
   }
 }
