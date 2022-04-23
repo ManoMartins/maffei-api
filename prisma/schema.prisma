@@ -10,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model User {
   id              String    @id @default(uuid())
   name            String
@@ -22,6 +27,7 @@ model User {
   phoneNumberType String
   birthDate       DateTime
   addresses       Address[]
+  role          Role      @default(USER)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @default(now())
 }
@@ -92,7 +98,7 @@ model Company {
 }
 
 model InvolvedCompanies {
-  company     Company    @relation(fields: [companyId], references: [id])
+  company     Company      @relation(fields: [companyId], references: [id])
   companyId   String
   product     StoreProduct @relation(fields: [productId], references: [id])
   productId   String

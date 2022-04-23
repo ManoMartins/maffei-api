@@ -1,10 +1,12 @@
 import {
   IsEmail,
+  IsEnum,
   IsNumber,
   IsOptional,
   IsString,
   MinLength,
 } from 'class-validator';
+import { Role } from 'src/auth/enums/role.enum';
 import { User } from '../entities/user.entity';
 
 export class CreateUserDto extends User {
@@ -36,4 +38,8 @@ export class CreateUserDto extends User {
 
   @IsString()
   birthDate: string;
+
+  @IsEnum(Role)
+  @IsOptional()
+  role?: Role;
 }
