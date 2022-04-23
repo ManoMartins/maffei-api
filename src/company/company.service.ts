@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { kebabCase } from 'lodash';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
@@ -6,23 +7,44 @@ import { UpdateCompanyDto } from './dto/update-company.dto';
 @Injectable()
 export class CompanyService {
   constructor(private readonly prisma: PrismaService) {}
-  create(createCompanyDto: CreateCompanyDto) {
-    return 'This action adds a new company';
+  async create(createCompanyDto: CreateCompanyDto) {
+    return await this.prisma.company.create({
+      data: { ...createCompanyDto, slug: kebabCase(createCompanyDto.name) },
+    });
   }
 
-  findAll() {
-    return this.prisma.company.findMany();
+  async findAll() {
+    return await this.prisma.company.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} company`;
+  async findOne(id: string) {
+    const company = await this.prisma.company.findFirst({
+      where: { id },
+    });
+
+    if (!company) {
+      throw new NotFoundException('Company not found');
+    }
+
+    return company;
   }
 
-  update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    return `This action updates a #${id} company`;
+  async update(id: string, updateCompanyDto: UpdateCompanyDto) {
+    await this.findOne(id);
+
+    return await this.prisma.company.update({
+      where: { id },
+      data: { ...updateCompanyDto, slug: kebabCase(updateCompanyDto.name) },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} company`;
+  async remove(id: string) {
+    await this.findOne(id);
+
+    await this.prisma.company.delete({
+      where: { id },
+    });
+
+    return;
   }
 }
