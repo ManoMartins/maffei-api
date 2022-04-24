@@ -8,6 +8,7 @@ import {
 } from 'class-validator';
 import { Role } from 'src/auth/enums/role.enum';
 import { User } from '../entities/user.entity';
+import { UserStatus } from './user-status.enum';
 
 export class CreateUserDto extends User {
   @IsString()
@@ -42,4 +43,8 @@ export class CreateUserDto extends User {
   @IsEnum(Role)
   @IsOptional()
   role?: Role;
+
+  @IsEnum(UserStatus)
+  @IsOptional()
+  status?: UserStatus;
 }

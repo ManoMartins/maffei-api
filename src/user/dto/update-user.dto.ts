@@ -1,4 +1,5 @@
-import { IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { UserStatus } from './user-status.enum';
 
 export class UpdateUserDto {
   @IsString()
@@ -18,4 +19,8 @@ export class UpdateUserDto {
 
   @IsString()
   birthDate: string;
+
+  @IsEnum(UserStatus)
+  @IsOptional()
+  status: UserStatus;
 }

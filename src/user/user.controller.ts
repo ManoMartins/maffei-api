@@ -8,10 +8,13 @@ import {
   HttpCode,
   HttpStatus,
   Put,
+  Patch,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateStatusUserDto } from './dto/update-status-user.dto';
+import { UpdatePasswordUserDto } from './dto/update-password-user-dto';
 
 @Controller('user')
 export class UserController {
@@ -35,6 +38,22 @@ export class UserController {
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return await this.userService.update(id, updateUserDto);
+  }
+
+  @Patch(':id/status')
+  async updateStatus(
+    @Param('id') id: string,
+    @Body() updateStatusUserDto: UpdateStatusUserDto,
+  ) {
+    return await this.userService.updateStatus(id, updateStatusUserDto);
+  }
+
+  @Patch(':id/password')
+  async updatePassword(
+    @Param('id') id: string,
+    @Body() updatePasswordUserDto: UpdatePasswordUserDto,
+  ) {
+    return await this.userService.updatePassword(id, updatePasswordUserDto);
   }
 
   @Delete(':id')
