@@ -9,14 +9,15 @@ import {
   HttpCode,
   HttpStatus,
   Patch,
+  Query,
 } from '@nestjs/common';
 import { StoreProductService } from './store-product.service';
 import { CreateStoreProductDto } from './dto/create-store-product.dto';
 import { UpdateStoreProductDto } from './dto/update-store-product.dto';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
-import { ProductStatus } from './entities/store-product.entity';
 import { UpdateStatusStoreProductDto } from './dto/update-status-store-product-dto';
+import { QueryDto } from './dto/quey.dto';
 
 @Controller('store-product')
 export class StoreProductController {
@@ -29,8 +30,8 @@ export class StoreProductController {
   }
 
   @Get()
-  async findAll() {
-    return await this.storeProductService.findAll();
+  async findAll(@Query() query: QueryDto) {
+    return await this.storeProductService.findAll(query);
   }
 
   @Get(':id')

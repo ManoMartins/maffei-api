@@ -103,9 +103,9 @@ model Company {
 }
 
 model InvolvedCompanies {
-  company     Company      @relation(fields: [companyId], references: [id])
+  company     Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId   String
-  product     StoreProduct @relation(fields: [productId], references: [id])
+  product     StoreProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId   String
   isDeveloper Boolean
   isPublisher Boolean
@@ -128,9 +128,9 @@ model Platform {
 }
 
 model ProductsOnPlatforms {
-  platform   Platform     @relation(fields: [platformId], references: [id])
+  platform   Platform     @relation(fields: [platformId], references: [id], onDelete: Cascade)
   platformId String
-  product    StoreProduct @relation(fields: [productId], references: [id])
+  product    StoreProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId  String
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @default(now())
@@ -148,9 +148,9 @@ model Genre {
 }
 
 model ProductsOnGenres {
-  product   StoreProduct @relation(fields: [productId], references: [id])
+  product   StoreProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
-  genre     Genre        @relation(fields: [genreId], references: [id])
+  genre     Genre        @relation(fields: [genreId], references: [id], onDelete: Cascade)
   genreId   String
   createdAt DateTime     @default(now())
   updatedAt DateTime     @default(now())
