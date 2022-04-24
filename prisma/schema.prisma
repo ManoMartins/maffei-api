@@ -20,21 +20,27 @@ enum StoreProductStatus {
   DISABLED
 }
 
+enum UserStatus {
+  ENABLED
+  DISABLED
+}
+
 model User {
-  id              String    @id @default(uuid())
+  id              String     @id @default(uuid())
   name            String
-  email           String    @unique
+  email           String     @unique
   password        String
   documentNumber  String
   gender          String
-  ranking         Int?      @default(0)
+  ranking         Int?       @default(0)
   phoneNumber     String
   phoneNumberType String
   birthDate       DateTime
   addresses       Address[]
-  role            Role      @default(USER)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @default(now())
+  status          UserStatus @default(ENABLED)
+  role            Role       @default(USER)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @default(now())
 }
 
 model Address {
