@@ -22,6 +22,20 @@ export class AddressService {
       where: {
         userId,
       },
+      include: {
+        city: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        state: {
+          select: {
+            id: true,
+            initials: true,
+          },
+        },
+      },
     });
 
     return addresses;

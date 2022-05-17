@@ -13,7 +13,7 @@ export class AppController {
   }
 
   @Get('/me')
-  getMe(@CurrentUser() user: User): string {
-    return `Hello ${user.name}`;
+  getMe(@CurrentUser() user: User): Promise<User> {
+    return this.appService.getUser(user);
   }
 }

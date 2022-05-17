@@ -27,6 +27,7 @@ import { RolesGuard } from './auth/guards/roles.guard';
     GenreModule,
     PlatformModule,
     CompanyModule,
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [

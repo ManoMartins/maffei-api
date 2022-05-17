@@ -18,6 +18,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { UpdateStatusStoreProductDto } from './dto/update-status-store-product-dto';
 import { QueryDto } from './dto/quey.dto';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 
 @Controller('store-product')
 export class StoreProductController {
@@ -30,6 +31,7 @@ export class StoreProductController {
   }
 
   @Get()
+  @IsPublic()
   async findAll(@Query() query: QueryDto) {
     return await this.storeProductService.findAll(query);
   }

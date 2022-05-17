@@ -24,6 +24,8 @@ export class AuthService {
 
     return {
       access_token: jwtToken,
+      id: user.id,
+      name: user.name,
     };
   }
 

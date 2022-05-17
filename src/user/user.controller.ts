@@ -15,12 +15,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateStatusUserDto } from './dto/update-status-user.dto';
 import { UpdatePasswordUserDto } from './dto/update-password-user-dto';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
+  @IsPublic()
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.userService.create(createUserDto);
   }
