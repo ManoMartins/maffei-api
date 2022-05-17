@@ -26,21 +26,22 @@ enum UserStatus {
 }
 
 model User {
-  id              String     @id @default(uuid())
+  id              String       @id @default(uuid())
   name            String
-  email           String     @unique
+  email           String       @unique
   password        String
   documentNumber  String
   gender          String
-  ranking         Int?       @default(0)
+  ranking         Int?         @default(0)
   phoneNumber     String
   phoneNumberType String
   birthDate       DateTime
   addresses       Address[]
-  status          UserStatus @default(ENABLED)
-  role            Role       @default(USER)
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @default(now())
+  creditCards     CreditCard[]
+  status          UserStatus   @default(ENABLED)
+  role            Role         @default(USER)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @default(now())
 }
 
 model Address {
@@ -162,4 +163,17 @@ model ProductsOnGenres {
   updatedAt DateTime     @default(now())
 
   @@id([genreId, productId])
+}
+
+model CreditCard {
+  id             String   @id @default(uuid())
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  cardNumber     String   @unique
+  cardHolder     String
+  cardExpiry     String
+  cardCvv        String
+  documentNumber String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
 }

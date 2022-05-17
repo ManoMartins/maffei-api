@@ -14,6 +14,7 @@ import { GenreModule } from './genre/genre.module';
 import { PlatformModule } from './platform/platform.module';
 import { CompanyModule } from './company/company.module';
 import { RolesGuard } from './auth/guards/roles.guard';
+import { CreditCardModule } from './credit-card/credit-card.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { RolesGuard } from './auth/guards/roles.guard';
     PlatformModule,
     CompanyModule,
     PrismaModule,
+    CreditCardModule,
   ],
   controllers: [AppController],
   providers: [
